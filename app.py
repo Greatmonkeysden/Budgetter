@@ -11,13 +11,13 @@ import json
 def init_firebase():
     try:
         if not firebase_admin._apps:
-            # Load credentials from environment variable
+            # Get the credentials from environment variables
             cred_json = os.getenv("FIREBASE_CREDENTIALS")
             cred = credentials.Certificate(json.loads(cred_json))
             firebase_admin.initialize_app(cred, {
                 'databaseURL': 'https://expensetracker-greatmonkey-default-rtdb.firebaseio.com/'
             })
-    except FirebaseError as e:
+    except Exception as e:
         st.error(f"Failed to initialize Firebase: {str(e)}")
 
 init_firebase()
