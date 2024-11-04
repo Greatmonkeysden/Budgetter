@@ -8,10 +8,11 @@ import matplotlib.pyplot as plt
 # Initialize Firebase
 def init_firebase():
     try:
-        if not firebase_admin._apps:
-            cred = credentials.Certificate("expensetracker-greatmonkey-firebase-adminsdk.json")
+        firebase_json_str = os.getenv("FIREBASE_CREDENTIALS")
+        if firebase_json_str:
+            cred = credentials.Certificate(json.loads(firebase_json_str))
             firebase_admin.initialize_app(cred, {
-                'databaseURL': 'https://expensetracker-greatmonkey-default-rtdb.firebaseio.com/'
+                'databaseURL': 'https://your-firebase-db-url.firebaseio.com/'
             })
     except FirebaseError as e:
         st.error(f"Failed to initialize Firebase: {str(e)}")
