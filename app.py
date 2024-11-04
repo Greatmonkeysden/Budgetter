@@ -5,6 +5,8 @@ from firebase_admin.exceptions import FirebaseError
 import pandas as pd
 import sys
 import matplotlib.pyplot as plt
+import os
+import json
 # Initialize Firebase
 def init_firebase():
     try:
