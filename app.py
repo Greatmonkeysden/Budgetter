@@ -9,15 +9,16 @@ import os
 import json
 # Initialize Firebase
 def init_firebase():
-    # Load the Firebase credentials from environment variable
-    firebase_json_str = os.getenv("FIREBASE_CREDENTIALS")
-    if firebase_json_str:
-        cred = credentials.Certificate(json.loads(firebase_json_str))
-        firebase_admin.initialize_app(cred, {
-            'databaseURL': 'https://your-firebase-db-url.firebaseio.com/'
-        })
-    else:
-        raise ValueError("Firebase credentials not found in environment variables.")
+    try:
+        if not firebase_admin._apps:
+            # Load credentials from environment variable
+            cred_json = os.getenv("FIREBASE_CREDENTIALS")
+            cred = credentials.Certificate(json.loads(cred_json))
+            firebase_admin.initialize_app(cred, {
+                'databaseURL': 'https://expensetracker-greatmonkey-default-rtdb.firebaseio.com/'
+            })
+    except FirebaseError as e:
+        st.error(f"Failed to initialize Firebase: {str(e)}")
 
 init_firebase()
 
